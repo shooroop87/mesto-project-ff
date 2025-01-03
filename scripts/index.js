@@ -7,6 +7,10 @@ const addButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
 const newCardForm = newCardPopup.querySelector('.popup__form');
 const closePopupButton = newCardPopup.querySelector('.popup__close');
+const imagePopup = document.querySelector('.popup_type_image');
+const imagePopupCloseButton = imagePopup.querySelector('.popup__close');
+const imagePopupImage = imagePopup.querySelector('.popup__image');
+const imagePopupCaption = imagePopup.querySelector('.popup__caption');
 
 // @todo: Функция создания карточки
 function createCard(cardData, handleDeleteCard) {
@@ -21,6 +25,10 @@ function createCard(cardData, handleDeleteCard) {
 
   deleteButton.addEventListener('click', () => {
     handleDeleteCard(cardElement);
+  });
+
+  cardImage.addEventListener('click', () => {
+    openImagePopup(cardData.link, cardData.name);
   });
 
   return cardElement;
@@ -39,6 +47,14 @@ function openPopup(popup) {
 // @todo: Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_is-opened');
+}
+
+// @todo: Функция открытия попапа изображения
+function openImagePopup(link, name) {
+  imagePopupImage.src = link;
+  imagePopupImage.alt = name;
+  imagePopupCaption.textContent = name;
+  openPopup(imagePopup);
 }
 
 // @todo: Обработчик добавления новой карточки
@@ -64,6 +80,7 @@ function handleNewCardSubmit(event) {
 addButton.addEventListener('click', () => openPopup(newCardPopup));
 closePopupButton.addEventListener('click', () => closePopup(newCardPopup));
 newCardForm.addEventListener('submit', handleNewCardSubmit);
+imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((cardData) => {
