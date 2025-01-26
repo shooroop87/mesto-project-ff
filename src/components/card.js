@@ -22,4 +22,14 @@ function createCard(cardData, handleDelete, handleLike, handleImageClick) {
     return cardElement;
 }
 
-export { createCard };
+// Функция для удаления карточки
+function handleDeleteCard(cardElement) {
+    cardElement.remove();
+}
+
+// Функция для обработки лайка карточки
+function handleLikeCard(likeButton) {
+    likeButton.classList.toggle('card__like-button_is-active');
+}
+
+export { createCard, handleDeleteCard, handleLikeCard };

@@ -6,7 +6,7 @@ import { initialCards } from './components/cards.js';
 
 // Импорты функций
 import { openModal, closeModal } from './components/modal.js';
-import { createCard } from './components/card.js';
+import { createCard, handleDeleteCard, handleLikeCard } from './components/card.js';
 
 // DOM узлы
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -27,15 +27,9 @@ const newCardForm = newCardPopup.querySelector('.popup__form');
 const editProfileForm = editProfilePopup.querySelector('.popup__form');
 const placesList = document.querySelector('.places__list');
 
-// Функция для удаления карточки
-function handleDeleteCard(cardElement) {
-    cardElement.remove();
-}
-
-// Функция для обработки лайка карточки
-function handleLikeCard(likeButton) {
-    likeButton.classList.toggle('card__like-button_is-active');
-}
+// Поля формы для добавления карточки
+const placeNameInput = newCardForm.querySelector('.popup__input_type_card-name');
+const placeLinkInput = newCardForm.querySelector('.popup__input_type_url');
 
 // Функция открытия попапа с картинкой
 function handleImageClick(cardData) {
@@ -44,26 +38,39 @@ function handleImageClick(cardData) {
     imagePopupCaption.textContent = cardData.name;
 
     openModal(imagePopup);
-    addEscListener();
 }
 
-// Закрытие попапов по нажатию Esc
-function handleEscClose(evt) {
-    if (evt.key === 'Escape') {
-        const popup = document.querySelector('.popup_is-opened');
-        if (popup) {
-            closeModal(popup);
-            removeEscListener();
-        }
-    }
+// Функция обработки редактирования профиля
+function handleProfileFormSubmit(evt) {
+    evt.preventDefault();
+
+    profileTitle.textContent = nameInput.value;
+    profileDescription.textContent = descriptionInput.value;
+
+    closeModal(editProfilePopup);
 }
 
-function addEscListener() {
-    document.addEventListener('keydown', handleEscClose);
+// Открытие попапа для редактирования профиля
+function openProfileEditPopup() {
+    nameInput.value = profileTitle.textContent;
+    descriptionInput.value = profileDescription.textContent;
+    openModal(editProfilePopup);
 }
 
-function removeEscListener() {
-    document.removeEventListener('keydown', handleEscClose);
+// Функция обработки добавления новой карточки
+function handleNewCardSubmit(evt) {
+    evt.preventDefault();
+
+    const cardData = {
+        name: placeNameInput.value,
+        link: placeLinkInput.value,
+    };
+
+    const cardElement = createCard(cardData, handleDeleteCard, handleLikeCard, handleImageClick);
+
+    placesList.prepend(cardElement);
+    closeModal(newCardPopup);
+    newCardForm.reset();
 }
 
 // Инициализация слушателей для всех попапов
@@ -79,47 +86,11 @@ function initPopups() {
         popup.addEventListener('mousedown', (event) => {
             if (event.target === event.currentTarget) {
                 closeModal(popup);
-                removeEscListener();
             }
         });
 
         popup.classList.add('popup_is-animated');
     });
-}
-
-// Редактирование профиля
-function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-
-    profileTitle.textContent = nameInput.value;
-    profileDescription.textContent = descriptionInput.value;
-
-    closeModal(editProfilePopup);
-    removeEscListener();
-}
-
-// Открытие попапа редактирования профиля
-profileEditButton.addEventListener('click', () => {
-    nameInput.value = profileTitle.textContent;
-    descriptionInput.value = profileDescription.textContent;
-    openModal(editProfilePopup);
-    addEscListener();
-});
-
-// Создание карточки
-function handleNewCardSubmit(evt) {
-    evt.preventDefault();
-
-    const placeName = newCardForm.querySelector('.popup__input_type_card-name').value;
-    const placeLink = newCardForm.querySelector('.popup__input_type_url').value;
-    const cardData = { name: placeName, link: placeLink };
-
-    const cardElement = createCard(cardData, handleDeleteCard, handleLikeCard, handleImageClick);
-
-    placesList.prepend(cardElement);
-    closeModal(newCardPopup);
-    removeEscListener();
-    newCardForm.reset();
 }
 
 // Инициализация попапов
@@ -131,10 +102,12 @@ editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 // Обработка добавления новой карточки
 newCardForm.addEventListener('submit', handleNewCardSubmit);
 
+// Открытие попапа для редактирования профиля
+profileEditButton.addEventListener('click', openProfileEditPopup);
+
 // Открытие попапа добавления карточки
 addButton.addEventListener('click', () => {
     openModal(newCardPopup);
-    addEscListener();
 });
 
 // Вывести базовый набор карточек на страницу
