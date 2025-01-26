@@ -1,7 +1,5 @@
-import { openModal } from './modal.js';
-
-function createCard(cardData) {
-    const cardTemplate = document.querySelector('#card-template').content; 
+function createCard(cardData, handleDelete, handleLike, handleImageClick) {
+    const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.cloneNode(true).querySelector('.card');
     const cardImage = cardElement.querySelector('.card__image');
     const cardTitle = cardElement.querySelector('.card__title');
@@ -13,27 +11,13 @@ function createCard(cardData) {
     cardTitle.textContent = cardData.name;
 
     // Удаление карточки
-    deleteButton.addEventListener('click', () => {
-        cardElement.remove();
-    });
+    deleteButton.addEventListener('click', () => handleDelete(cardElement));
 
     // Лайк карточки
-    likeButton.addEventListener('click', () => {
-        likeButton.classList.toggle('card__like-button_is-active');
-    });
+    likeButton.addEventListener('click', () => handleLike(likeButton));
 
-    // Открытие попапа изображения
-    cardImage.addEventListener('click', () => {
-        const imagePopup = document.querySelector('.popup_type_image');
-        const imagePopupImage = imagePopup.querySelector('.popup__image');
-        const imagePopupCaption = imagePopup.querySelector('.popup__caption');
-
-        imagePopupImage.src = cardData.link;
-        imagePopupImage.alt = cardData.name;
-        imagePopupCaption.textContent = cardData.name;
-
-        openModal(imagePopup);
-    });
+    // Открытие попапа с картинкой
+    cardImage.addEventListener('click', () => handleImageClick(cardData));
 
     return cardElement;
 }
