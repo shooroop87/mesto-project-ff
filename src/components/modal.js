@@ -8,7 +8,7 @@ function closeModal(popup) {
     removeEscListener();
 }
 
-// Закрытие popup по нажатию Esc
+// Закрываю popup по нажатию Esc
 function handleEscClose(evt) {
     if (evt.key === 'Escape') {
         const popup = document.querySelector('.popup_is-opened');
@@ -18,7 +18,7 @@ function handleEscClose(evt) {
     }
 }
 
-// Добавление слушателя для Esc
+// Добавляю слушателя для Esc
 function addEscListener() {
     document.addEventListener('keydown', handleEscClose);
 }

@@ -46,7 +46,7 @@ const placesList = document.querySelector('.places__list');
 const placeNameInput = newCardForm.querySelector('.popup__input_type_card-name');
 const placeLinkInput = newCardForm.querySelector('.popup__input_type_url');
 
-// Сохраняем ID пользователя
+// Сохраняем ID юзера
 let userId;
 
 // Функция управления состоянием загрузки
@@ -226,10 +226,10 @@ enableValidation(validationConfig);
 // Загрузка начальных данных
 getAppInfo()
   .then(([userData, initialCards]) => {
-    // Сохраняю ID пользователя
+    // Сохраняю ID юзера
     userId = userData._id;
     
-    // Инициализирую данные пользователя
+    // Инициализирую данные юзера
     profileTitle.textContent = userData.name;
     profileDescription.textContent = userData.about;
     if (userData.avatar) {

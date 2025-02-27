@@ -16,7 +16,7 @@ const config = {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
   
-  // Получение инфо о пользователе
+  // Получаю инфо о юзере
   export const getUserInfo = () => {
     return fetch(`${config.baseUrl}/users/me`, {
       method: 'GET',
@@ -25,7 +25,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Получение списка карточек
+  // Получаю списка карточек
   export const getInitialCards = () => {
     return fetch(`${config.baseUrl}/cards`, {
       headers: config.headers
@@ -33,7 +33,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Обновление инфо о пользователе
+  // Обновляю инфо о юзере
   export const updateUserInfo = (data) => {
     return fetch(`${config.baseUrl}/users/me`, {
       method: 'PATCH',
@@ -46,7 +46,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Обновление аватара
+  // Обновляю аватар
   export const updateUserAvatar = (avatarUrl) => {
     return fetch(`${config.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
@@ -58,7 +58,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Добавление новой карточки
+  // Добавляю новую карточку
   export const addCard = (data) => {
     return fetch(`${config.baseUrl}/cards`, {
       method: 'POST',
@@ -71,7 +71,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Удаление карточки
+  // Удаляю карточку
   export const deleteCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
@@ -80,7 +80,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Добавление лайка
+  // Добавляю лайк
   export const addLike = (cardId) => {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
@@ -89,7 +89,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Удаление лайка с карточки
+  // Удаляю лайк с карточки
   export const removeLike = (cardId) => {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
@@ -98,7 +98,7 @@ const config = {
       .then(checkResponse);
   };
   
-  // Загрузка начальных данных
+  // Загружаю начальные данных
   export const getAppInfo = () => {
     return Promise.all([getUserInfo(), getInitialCards()]);
   };

@@ -9,7 +9,7 @@ export function createCard(cardData, onImageClick, userId) {
   const deleteButton = cardElement.querySelector('.card__delete-button');
   const likeButton = cardElement.querySelector('.card__like-button');
   
-  // Создаем контейнер для кнопки лайка и счетчика
+  // Создаю контейнер для кнопки лайка и счетчика
   const likeContainer = cardElement.querySelector('.card__like-container') || 
                         document.createElement('div');
   
@@ -19,7 +19,7 @@ export function createCard(cardData, onImageClick, userId) {
     likeContainer.appendChild(likeButton);
   }
   
-  // Добавляем счетчик лайков
+  // Добавляю счетчик лайков
   let likeCounter = cardElement.querySelector('.card__like-counter');
   if (!likeCounter) {
     likeCounter = document.createElement('span');
@@ -27,24 +27,24 @@ export function createCard(cardData, onImageClick, userId) {
     likeContainer.appendChild(likeCounter);
   }
   
-  // Инициализируем данные карточки
+  // Инциализирую данные карточки
   cardElement.dataset.cardId = cardData._id;
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
   cardTitle.textContent = cardData.name;
   
-  // Отображаем кол-во лайков
+  // Отображаю кол-во лайков
   likeCounter.textContent = cardData.likes ? cardData.likes.length : 0;
   
-  // Проверяем, поставил ли пользователь лайк этой карточке
+  // Проверяю поставил ли пользователь лайк этой карточке
   if (cardData.likes && cardData.likes.some(like => like._id === userId)) {
     likeButton.classList.add('card__like-button_is-active');
   }
   
-  // Проверяем, является ли пользователь владельцем карточки
+  // Проверяб является ли пользователь владельцем карточки
   const isOwner = cardData.owner && cardData.owner._id === userId;
   
-  // Показываем кнопку удаления только для карточек пользователя
+  // Показываю кнопку удаления только для карточек пользователя
   if (!isOwner) {
     deleteButton.style.display = 'none';
   }
